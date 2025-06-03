@@ -62,7 +62,7 @@ complex enough to be stored as a library.
 
 Files in this directory often return a function directly.
 
-## Distibution
+## Distribution
 This section will be updated when I actually get to this point with a
 project.
 
