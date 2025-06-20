@@ -1,7 +1,7 @@
 NAME ?= UNTITLED
 VERSION ?= 0.0.0
 
-FENNEL_PATH ?= ./fennel
+FENNEL_PATH ?= ./bin/fennel
 
 LUA_FILES := $(shell find * -not \( -path "build" -prune \) -not \( -path "dist" -prune \) -not \( -path "main.lua" -o -path "lib/fennel.lua" \) -type f -name "*.lua")
 FNL_FILES := $(shell find * -not \( -path "build" -prune \) -not \( -path "dist" -prune \) -type f -name "*.fnl")
@@ -19,7 +19,7 @@ love: $(BUILD_FNL_FILES) $(BUILD_LUA_FILES) $(BUILD_ASSETS) | dist/
 	cd build && zip -r  ../$(DIST_LOVE) *
 
 # compile a .lua file from a .fnl source
-$(BUILD_FNL_FILES): build/%.lua: %.fnl fennel | build/
+$(BUILD_FNL_FILES): build/%.lua: %.fnl $(FENNEL_PATH) | build/
 	@mkdir -p $(dir $@)
 	$(FENNEL_PATH) --compile $< > $@
 
