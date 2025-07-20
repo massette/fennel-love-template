@@ -56,12 +56,6 @@ projects.
 Libraries are often stored in subdirectories.
 Note, `fennel.lua` is stored here by default.
 
-#### util/
-This directory contains code used across multiple files that may not be
-complex enough to be stored as a library.
-
-Files in this directory often return a function directly.
-
 ## Distribution
 This section will be updated when I actually get to this point with a
 project.
