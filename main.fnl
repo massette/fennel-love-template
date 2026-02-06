@@ -1,11 +1,14 @@
 ; main.fnl
 (local g love.graphics)
 
-(local fnt (g.newFont))
-(local label "Edit main.fnl !!")
+(local ui (require "lib.ui"))
 
-; love callbacks
-(fn love.draw []
-  (let [cx (/ (- (g.getWidth) (fnt:getWidth label)) 2)
-        cy (/ (- (g.getHeight) (fnt:getHeight)) 2)]
-    (g.print label cx cy)))
+(local menu
+  (doto (ui.panel {:anchor    :top
+                   :direction :vertical})
+        (: :add
+           (doto (ui.label "Start")
+                 (tset :on-click)))))
+
+(fn love.keypressed [keycode]
+  )
