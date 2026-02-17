@@ -1,20 +1,25 @@
-(fn repr [value ?level]
-  (let [level (or ?level 0)
-              indent (string.rep "  " level)]
-    (case (type value)
-      :table (.. (accumulate [result "{\n"
-                              key value (pairs value)]
-                   (.. result indent "  ["
-                       (repr key (+ level 1))
-                       "] = "
-                       (repr value (+ level 1))
-                       ",\n"))
-                 indent "}")
-      :string (.. "'" value "'")
-      _ value)))
+(fn indent [str]
+  (let [TABFILL "    "
+        (result _) (str:gsub "(\r?\n)" (.. "%1" TABFILL))]
+    (.. TABFILL result)))
 
-(fn print-repr [tbl]
-  (print (repr tbl)))
+(fn repr [value ?depth]
+  (let [depth  (- (or ?depth inf) 1)]
+    (case (type value)
+      :table (if
+               (= (next value) nil) "{}"
+               (<= depth 0) "{ ... }"
+               (.. "{\n"
+                   (-> (icollect [key value (pairs value)]
+                         (.. "[" (repr key depth) "] = " (repr value depth) ","))
+                       (table.concat "\n")
+                       (indent))
+                   "\n}"))
+      :string (.. "'" value "'")
+      _ (.. "(" (tostring value) ")"))))
+
+(fn print-repr [value]
+  (print (repr value)))
 
 {: repr
  :print print-repr}
